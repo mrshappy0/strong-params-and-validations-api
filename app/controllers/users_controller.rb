@@ -17,20 +17,28 @@ class UsersController < ApplicationController
     if @user.save
       render json: @user
     else
-      render status: 418
+      render json: @user.errors.messages
     end
   end
   
   def update
+    @user = User.find(params[:id])
+    @user.update 
+    
+    render json: @user 
   end
   
   def destroy
+    @user = User.find(params[:id])
+    @user.destroy 
+
+    redirect_to action: "index"
   end
 
   private
 
   def user_params 
-    params.require(:user).permit([:name, :username, :email])
+    params.require(:user).permit([:name, :username, :email, :password])
   end
 
 end
