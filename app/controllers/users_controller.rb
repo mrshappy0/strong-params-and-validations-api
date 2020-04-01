@@ -23,9 +23,11 @@ class UsersController < ApplicationController
   
   def update
     @user = User.find(params[:id])
-    @user.update 
-    
-    render json: @user 
+    if @user.update 
+      render json: @user 
+    else 
+      render json: @user.errors.messages 
+    end
   end
   
   def destroy
